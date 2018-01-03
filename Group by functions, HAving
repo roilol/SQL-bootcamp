@@ -1,0 +1,134 @@
+------------BASIC Aggregate FUnctions-----------------------
+
+SELECT AVG (amount) FROM payment;
+
+SELECT ROUND (AVG (amount),n)FROM payment; >> up to n decimals using "AVG ()"
+
+SELECT MIN (amount) from payment;
+
+SELECT COUNT (amount) FROM payment WHERE amount = 0.00;
+
+SELECT MAX (amount) FROM payment;
+
+SELECT SUM (amount) FROM payment;
+
+
+
+----------------GROUP BY-------------------
+
+The GROUP BY clause divides the rows returned from the SELECT statement into groups. For each group, you can apply an aggregate function
+i.e - calculating the sum of items, count the number of items in the groups.
+
+
+i.e>>
+SELECT customer_id [,aggregate function]
+FROM payment
+GROUP BY customer_id; 
+>> same as SELECT DISTINCT for the time being = Duplicated customer_id are grouped together, ALSO other SQL tools might requre you put aggregate function on it. 
+PostgreSQL is very flexible. 
+
+i.e 2
+SELECT customer_id, SUM (amount) 
+FROM payment
+GROUP BY customer_id;
+
+SELECT SUM (amount) 
+FROM payment
+GROUP BY customer_id;
+>>>>>>>>>PostgreSQL FLEXIBLE !!!!<<<<<<<<<<<<<<<<<<
+
+i.e.3
+How much did each customer make their payment?
+SELECT customer_id, SUM (amount) 
+FROM payment
+GROUP BY customer_id
+ORDER BY SUM(amount) DESC;
+
+How many transactions were made from each employee?
+SELECT staff_id, COUNT (*)
+FROM payment
+GROUP BY staff_id;
+
+How many ratings are existing?
+SELECT rating, COUNT (rating)
+FROM film
+group by rating;
+
+How many days of rental duration did customers make?
+SELECT rental_duration, COUNT(rental_duration) 
+FROM film
+GROUP BY rental_duration;
+
+what is the average rental rate for each rating?
+SELECT rating, avg (rental_rate) 
+FROM film
+group by rating;
+
+
+Challenge 1
+We have two staff members with Staff IDs 1 and 2. We want to give a bonus to the staff member that handled the most payments. 
+How many payments did each staff member handle? And how much was the total amount processed by each staff member
+
+>>SELECT staff_id, COUNT(amount), SUM (amount) 
+FROM payment
+GROUP BY staff_id;
+
+
+Challenge 2
+Coporate headquarters is auditing our store! They want to know the average replacement cost of movies by rating
+For example, R rated movies have an average replacement cost of $20.23
+
+>>>>>SELECT rating, ROUND (AVG (replacement_cost),2)
+FROM film
+GROUP BY rating;
+
+
+Challenge 3
+We want to send coupons to the 5 customers who have spent the most amount of money
+Get me the customer ids of the top 5 spenders.
+
+>>SELECT customer_id, SUM (amount)
+FROM payment
+GROUP BY customer_id
+ORDER BY SUM (amount) ASC
+LIMIT 5;
+
+***HAVING FUNCING*****
+We ovten use the HAVING clause in conjunction with the GROUP BY clause to filter group rows that do not satisfy a specified condition.
+The HAVING clause sets the condition for group rows created by the GROUP BY clause after the GROUP BY clause applies while the WHERE
+clause sets the condition for individual rows before GROUP BY clause applies>> Main difference between the HAVING and WHERE clauses.
+
+SELECT customer_id, SUM (amount)
+FROM payment
+GROUP BY customer_id
+HAVING SUM(amount) > 200;
+
+
+SELECT store_id, COUNT(customer_id)
+FROM customer
+GROUP BY store_id
+HAVING COUNT(customer_id) > 300;
+
+
+SELECT rating, ROUND (AVG (rental_rate),2)
+FROM film
+WHERE rating IN ('R','G','PG')
+GROUP BY rating
+HAVING ROUND (AVG (rental_rate),2) <3;
+
+Challenge 1
+We wnat to know what customers are eligible for our platinum credit card. The requirements are that the customer has at least a total of 
+40 transaction payments. What customers(by customer_id) are eligible for the credit card?
+
+>>>>SELECT customer_id, COUNT (amount)
+FROM payment
+GROUP BY customer_id
+HAVING COUNT (amount) >= 40;
+
+Challenge 2
+When grouped by rating, what movie ratings have an average rental duration of more than 5 days?
+
+>>>>SELECT rating, AVG (rental_duration)
+FROM film
+GROUP BY rating
+HAVING AVG (rental_duration) >5;
