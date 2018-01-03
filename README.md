@@ -84,3 +84,24 @@ SQL Statement Fundamentals
                         
                         ILIKE: for matching values without case sensitivity
                         ILIKE 'BAR%'; = 'BaR%'; ='bAR%' etc
+                        
+     General Challenge 1
+     
+     Q.1 How many paymenet trasactions were greater than $5.00?
+     A.1 >SELECT COUNT (amouunt) FROM payment WHERE amount >5;
+     
+     
+     Q2 How many actors have a first name that starts with letter P?
+     A2 > SELECT COUNT (*) FROM actor WHERE first_name LIKE 'P%';
+     
+     Q3 How many unique districts are our customers from?
+     A3 SELECT COUNT (DISTINCT (district)) FROM address;
+     
+     Q4 Retrieve the list of names for those distinct districts from the previous question.
+     A4 SELECT DISTINCT (distirct) FROM address;
+     
+     Q5 How many films have a rating of R and a replacement cost between $5 and $15?
+     A5 SELECT COUNT (*) FROM film WHERE rating = 'R' AND replacement_cost BETWEEN 5 and 15;
+     
+     Q6 How many films have the word Truman somewhere in the title?
+     A6 SELECT COUNT (*) FROM film WHERE title LIKE '%Truman%'
