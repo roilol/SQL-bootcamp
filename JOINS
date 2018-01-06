@@ -1,0 +1,67 @@
+As allows us to rename columns or table selections with an alias
+
+SELECT payment_id AS my_payment_column
+FROM payment;
+
+i.e
+-----------------------------------
+SELECT customer_id, SUM (amount) 
+FROM payment
+GROUP BY customer_id;
+
+>>>>>>>>>>>>>using AS
+
+SELECT customer_id, SUM (amount) AS total_spent
+FROM payment
+GROUP BY customer_id;
+---------------------------------------------
+
+JOINS !@#!@$%%#$&%$&*$%^@ JOINS !@#@#%
+
+*INNER JOIN : The INNER JOIN clause returns rows in A table that have the corresponding rows in the B table.
+
+SELECT 
+customer.customer_id, --- specify it's from the 'customer' table
+first_name, --- it doesn't have to specify that it's from 'customer' table since it's unique column from it.
+last_name,
+email,
+amount, ----------------- amount, payment_date are from 'payment'table, also don't have to specify.
+payment_date
+FROM customer
+INNER JOIN payment ON payment.customer_id = customer.customer_id;
+
+**with WHERE clause
+SELECT 
+customer.customer_id, 
+first_name,
+last_name,
+email,
+amount,
+payment_date
+FROM customer
+INNER JOIN payment ON payment.customer_id = customer.customer_id
+WHERE customer.customer_id = 2;
+
+***With ORDER BY clause
+SELECT 
+customer.customer_id, 
+first_name,
+last_name,
+email,
+amount,
+payment_date
+FROM customer
+INNER JOIN payment ON payment.customer_id = customer.customer_id
+ORDER BY first_name;
+
+***WIth WHERE LIKE
+SELECT 
+customer.customer_id, 
+first_name,
+last_name,
+email,
+amount,
+payment_date
+FROM customer
+INNER JOIN payment ON payment.customer_id = customer.customer_id
+WHERE first_name LIKE 'A%';
