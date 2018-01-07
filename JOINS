@@ -65,3 +65,29 @@ payment_date
 FROM customer
 INNER JOIN payment ON payment.customer_id = customer.customer_id
 WHERE first_name LIKE 'A%';
+
+
+---------------------------------------
+Examples of Outer Joins!!!
+
+Q1
+SELECT film.film_id, film.title, inventory_id
+FROM film
+LEFT OUTER JOIN inventory ON inventory.film_id = film.film_id;
+
+
+------------
+Q2
+SELECT film.film_id, film.title, inventory_id
+FROM film
+LEFT OUTER JOIN inventory ON inventory.film_id = film.film_id
+WHERE inventory_id IS NULL =(WHERE inventory.film_id is NULL)
+ORDER BY film.title;
+
+----------------------
+UNION = The UNION operator combines result sets of two or more SELECT statements into a single result set.
+-Both queries must return the same # of columns
+-The corresponding columns in the queries must have compatible data types.
+-We often use the UNION operator to combine data from similar tables that are not perfectly normalized.
+ex) You have two tables having exact same data inside of them. but you want to join the information together.
+-The UNION operator removes all duplicate rows unless the UNION ALL is used.
