@@ -1,0 +1,57 @@
+* Timestamps
+--------------------
+1. extract ! = extract( unit from date)
+
+SELECT film.film_id, film.title, inventory_id
+FROM film
+LEFT OUTER JOIN inventory ON inventory.film_id = film.film_id
+WHERE inventory_id IS NULL
+ORDER BY title;
+--------------------------
+Q1 I want to know the total amount by the month of my highest growing month.
+
+SELECT SUM(amount), extract(month from payment_date) AS month
+FROM payment
+Group by month
+ORDER BY SUM(amount) DESC
+LIMIT 1;
+
+SELECT SUM(amount) AS total, extract(month from payment_date) AS month
+FROM payment
+Group by month
+ORDER BY total DESC
+LIMIT 1;
+
+
+
+*Mathematical Functions
+SELECT round (AVG(amount),2)
+FROM payment;
+
+SELECT customer_id + rental_id AS new_id
+FROM payment;
+
+
+*String functions
+
+SELECT first_name || ' ' || last_name As full_name >> in order to put a space between first_name and last_name
+FROM customer;
+
+
+
+SELECT first_name, char_length(first_name)
+FROM customer;
+
+
+SELECT upper(first_name)
+FROM customer;
+
+
+*SUBQUERY 
+subquery allows us to use multiple SELECT statements, where we basically have a query within a query.
+q1. we want to find the films whose rental rate is higher than the average rental rate.
+A1.find the AVG first using SELECT function, and the use the first resulf of first query at the 2nd SELECT function.
+A2 using subquery
+SELECT title, rental_rate
+FROM film
+WHERE rental_rate > (SELECT AVG (rental_rate) FROM film);
