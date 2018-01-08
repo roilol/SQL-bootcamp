@@ -25,7 +25,7 @@ SQL Statement Fundamentals
            FROM table_name
            WHERE conditions; (=, >, <, >=, <=, "<> or !="=not equal)
            
-4. COUNT = retruns the numbers of input rows that match a specific condition of a query.
+4. COUNT = retruns the numbers of input rows that match a specific condition of a query= only returns distinct values.
   
   i.e SELECT COUNT (*) or (column) FROM table_name;
       
